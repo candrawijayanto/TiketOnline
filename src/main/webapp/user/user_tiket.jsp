@@ -11,32 +11,31 @@
 
         <body>
             <div align="center">
-                <h1> List Tiket: <span style="color: yellowgreen;"> ${tiket.get(0).getEvent().getName()} </span>
-                </h1>
-                Jumlah Tiket Saat ini: <span style="color: red;"> ${jumlahSaatIni} dari ${limitTiketEvent}
-                </span> <br><br>
+                <h1> List tiket untuk user: <span style="color: yellowgreen;"> ${user.getFirstName()} ${user.getLastName()} </span> </h1>
                 <a href="/home"> Home </a> <br>
-                <a href="/showAllEvents"> Back </a> <br> <br>
-                <form method="POST" action="/addTiket">
-                    <input type="hidden" name="idEvent" value=${tiket.get(0).getEvent().getIdEvent()}>
-                    <input type="number" name="jumlah" placeholder="jumlah">
-                    <input type="submit" value="Tambah Tiket">
-                </form> <br> <br>
+                <a href="/showAllUsers"> Back </a>
                 <table border="1">
                     <thead>
                         <tr>
                             <td> ID Tiket </td>
+                            <td> Event Name </td>
+                            <td> Event Date </td>
+                            <td> Event Location </td>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="t" items="${tiket}">
+                        <c:forEach var="u" items="${user.getTiket()}">
                             <tr>
-                                <td> ${t.getIdTiket()} </td>
+                                <td> ${u.getIdTiket()} </td>
+                                <td> ${u.getEvent().getName()} </td>
+                                <td> ${u.getEvent().getDate()} </td>
+                                <td> ${u.getEvent().getLocation()} </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
+
         </body>
 
     </html>

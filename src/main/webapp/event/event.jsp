@@ -36,7 +36,7 @@
                                 <td>
                                     <a href="/deleteEvent?id=${e.idEvent}"> hapus | </a>
                                     <a href="/showUpdateEventForm?id=${e.idEvent}"> edit | </a>
-                                    <a href="/showAllTikets?idEvent=${e.idEvent}"> tiket </a>
+                                    <a href="/showAllEventTikets?idEvent=${e.idEvent}"> tiket </a>
                                 </td>
                             </tr>
                         </c:forEach>

@@ -20,13 +20,13 @@ public class EventController {
 
     @GetMapping("/showNewEventForm")
     public ModelAndView showNewEventForm(){
-        ModelAndView mv = new ModelAndView("new_event_form.jsp");
+        ModelAndView mv = new ModelAndView("/event/new_event_form.jsp");
         return mv;
     }
 
     @GetMapping("/showUpdateEventForm")
     public ModelAndView showUpdateEventForm(int id){
-        ModelAndView mv = new ModelAndView("update_event_form.jsp");
+        ModelAndView mv = new ModelAndView("/event/update_event_form.jsp");
         Event event = eventService.getEventById(id); 
         mv.addObject("event", event);
         return mv;
@@ -34,7 +34,7 @@ public class EventController {
 
     @GetMapping("/showAllEvents")
     public ModelAndView showAllEvents() {
-        ModelAndView mv = new ModelAndView("event.jsp");
+        ModelAndView mv = new ModelAndView("/event/event.jsp");
         List<Event> events = eventService.getAllEvents();
         mv.addObject("event", events);
         return mv;

@@ -21,7 +21,7 @@ public class UserController {
     public String showAllUsers(HttpSession session) {
         List<User> user = userService.getAllUsers();
         session.setAttribute("user", user);
-        return "user.jsp";
+        return "/user/user.jsp";
     }
 
 }

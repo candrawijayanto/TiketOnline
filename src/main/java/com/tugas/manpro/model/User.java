@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,7 +27,7 @@ public class User {
     private String email;
 
     @OneToMany
-    @JoinTable(name = "userTiket", joinColumns = @JoinColumn(name = "idUser", referencedColumnName = "idUser"), inverseJoinColumns = @JoinColumn(name = "idTiket", referencedColumnName = "idTiket"))
+    @JoinColumn(name = "idUser")
     private List<Tiket> tiket = new ArrayList<>();
 
     public List<Tiket> getTiket() {

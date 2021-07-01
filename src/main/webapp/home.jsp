@@ -10,10 +10,8 @@
 
     <body>
         <div align="center">
-            <a href="/showAllUsers"> Manajemen User </a> <br>
-            <a href="/showAllEvents"> Manajemen Event </a> <br>
-            <a href="/sendMails"> Kirim Email </a> <br>
-            <a href="/showAllTikets"> Manajemen Tiket </a> <br>
+            <a href="/showAllUsers"> Manajemen User </a> <br> <br>
+            <a href="/showAllEvents"> Manajemen Event </a> <br> <br>
 
         </div>
     </body>

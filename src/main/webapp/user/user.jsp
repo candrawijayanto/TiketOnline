@@ -20,7 +20,6 @@
                                 <td> First Name </td>
                                 <td> Last Name </td>
                                 <td> Email </td>
-                                <td> coba </td>
                                 <td> operasi </td>
                             </tr>
                         </thead>
@@ -31,7 +30,6 @@
                                     <td> ${user.getFirstName()} </td>
                                     <td> ${user.getLastName()} </td>
                                     <td> ${user.getEmail()} </td>
-                                    <td> ${user.getTiket().get(1).getIdTiket()} </td>
                                     <td>
                                         <a href="/showAllUserTiket?idUser=${user.getIdUser()}"> tiket </a>
                                     </td>

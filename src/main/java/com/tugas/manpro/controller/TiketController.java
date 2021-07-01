@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -26,9 +27,9 @@ public class TiketController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/showAllTikets")
+    @GetMapping("/showAllEventTikets")
     public ModelAndView getAllTikets(int idEvent) {
-        ModelAndView mv = new ModelAndView("tiket.jsp");
+        ModelAndView mv = new ModelAndView("/event/event_tiket.jsp");
         List<Tiket> tikets = tiketService.getTiketByIdEvent(idEvent);
         int limitTiketEvent = eService.getLimitEvent(idEvent);
         int jumlahSaatIni = tiketService.currentAmount(idEvent);
@@ -40,19 +41,19 @@ public class TiketController {
     }
 
     @GetMapping("/showAllUserTiket")
-    public ModelAndView getAllUserTiket (int idUser){
-        ModelAndView mv = new ModelAndView("user_tiket.jsp");
+    public ModelAndView getAllUserTiket(int idUser) {
+        ModelAndView mv = new ModelAndView("/user/user_tiket.jsp");
         User user = userService.getUserById(idUser);
-        List<Tiket> tiket = tiketService.getTiketByUser(user);
-        mv.addObject("userTiket", tiket);
+        mv.addObject("user", user);
         return mv;
     }
 
     @GetMapping("showNewTiketForm")
-    public ModelAndView showNewTiketForm(int id) {
-        ModelAndView mv = new ModelAndView("tiket_form.jsp");
-        List<Tiket> tiket = tiketService.getTiketByIdEvent(id);
-        mv.addObject("tiket", tiket);
+    public ModelAndView showNewTiketForm(int idEvent) {
+        ModelAndView mv = new ModelAndView("/tiket/new_tiket_form.jsp");
+        List<User> user = userService.getAllUsers();
+        mv.addObject("user", user);
+        mv.addObject("idEvent", idEvent);
         return mv;
     }
 
@@ -70,4 +71,10 @@ public class TiketController {
         return "redirect:/showAllTikets?idEvent=" + idEvent;
     }
 
+    @PostMapping("/addTiket2")
+    @ResponseBody
+    public String addTiket2(int userSelect[]){
+
+        return "hallo dunia" + userSelect[0] ;
+    }
 }

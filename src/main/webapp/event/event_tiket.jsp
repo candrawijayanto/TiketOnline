@@ -11,31 +11,29 @@
 
         <body>
             <div align="center">
-                <h1> List tiket untuk user: <span style="color: yellowgreen;"> ${userTiket.get(0).getUser().get(0).getFirstName()} ${userTiket.get(0).getUser().get(0).getLastName()} </span> </h1>
+                <h1> List Tiket: <span style="color: yellowgreen;"> ${tiket.get(0).getEvent().getName()} </span></h1>
+                Jumlah Tiket Saat ini: <span style="color: red;"> ${jumlahSaatIni} dari ${limitTiketEvent} </span>
+                <br><br>
+                <a href="/showNewTiketForm?idEvent=${tiket.get(0).getEvent().getIdEvent()}"> Tambah Tiket </a> <br>
                 <a href="/home"> Home </a> <br>
-                <a href="/showAllUsers"> Back </a>
+                <a href="/showAllEvents"> Back </a> <br> <br>
                 <table border="1">
                     <thead>
                         <tr>
                             <td> ID Tiket </td>
-                            <td> Event Name </td>
-                            <td> Event Date </td>
-                            <td> Event Location </td>
+                            <td> Nama User </td>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="userTiket" items="${userTiket}">
+                        <c:forEach var="t" items="${tiket}">
                             <tr>
-                                <td> ${userTiket.getIdTiket()} </td>
-                                <td> ${userTiket.getEvent().getName()} </td>
-                                <td> ${userTiket.getEvent().getDate()} </td>
-                                <td> ${userTiket.getEvent().getLocation()} </td>
+                                <td> ${t.getIdTiket()} </td>
+                                <td> ${t.getUser().getFirstName()} ${t.getUser().getLastName()} </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
-
         </body>
 
     </html>

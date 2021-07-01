@@ -10,26 +10,31 @@
         </head>
 
         <body>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <td> ID Tiket </td>
-                        <td> Event Name </td>
-                        <td> Event Date </td>
-                        <td> Event Location </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="userTiket" items="${userTiket}">
+            <div align="center">
+                <h1> List tiket untuk user: <span style="color: yellowgreen;"> ${userTiket.get(0).getUser().get(0).getFirstName()} ${userTiket.get(0).getUser().get(0).getLastName()} </span> </h1>
+                <a href="/home"> Home </a> <br>
+                <a href="/showAllUsers"> Back </a>
+                <table border="1">
+                    <thead>
                         <tr>
-                            <td> ${userTiket.getIdTiket()} </td>
-                            <td> ${userTiket.getEvent().getName()} </td>
-                            <td> ${userTiket.getEvent().getDate()} </td>
-                            <td> ${userTiket.getEvent().getLocation()} </td>
+                            <td> ID Tiket </td>
+                            <td> Event Name </td>
+                            <td> Event Date </td>
+                            <td> Event Location </td>
                         </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="userTiket" items="${userTiket}">
+                            <tr>
+                                <td> ${userTiket.getIdTiket()} </td>
+                                <td> ${userTiket.getEvent().getName()} </td>
+                                <td> ${userTiket.getEvent().getDate()} </td>
+                                <td> ${userTiket.getEvent().getLocation()} </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
 
         </body>
 

@@ -29,6 +29,14 @@ public class Tiket {
     @ManyToMany(mappedBy = "tiket")
     private List<User> user = new ArrayList<>();
 
+    public List<User> getUser() {
+        return user;
+    }
+
+    public void setUser(List<User> user) {
+        this.user = user;
+    }
+
     public Tiket() {
     }
 
@@ -51,6 +59,11 @@ public class Tiket {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    @Override
+    public String toString() {
+        return "Tiket [event=" + event + ", idTiket=" + idTiket + ", user=" + user + "]";
     }
 
 }

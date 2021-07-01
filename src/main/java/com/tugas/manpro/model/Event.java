@@ -39,7 +39,8 @@ public class Event {
         this.jml = jml;
     }
 
-    public Event(){}
+    public Event() {
+    }
 
     public int getIdEvent() {
         return idEvent;
@@ -88,5 +89,11 @@ public class Event {
     public void setTiket(List<Tiket> tiket) {
         this.tiket = tiket;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Event [date=" + date + ", idEvent=" + idEvent + ", jml=" + jml + ", location=" + location + ", name="
+                + name + ", tiket=" + tiket + "]";
+    }
+
 }

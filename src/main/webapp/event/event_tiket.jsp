@@ -12,9 +12,9 @@
         <body>
             <div align="center">
                 <h1> List Tiket: <span style="color: yellowgreen;"> ${tiket.get(0).getEvent().getName()} </span></h1>
-                Jumlah Tiket Saat ini: <span style="color: red;"> ${jumlahSaatIni} dari ${limitTiketEvent} </span>
+                Jumlah Tiket Saat ini: <span style="color: red;"> ${jumlahSaatIni} dari  ${limitTiketEvent} </span>
                 <br><br>
-                <a href="/showNewTiketForm?idEvent=${tiket.get(0).getEvent().getIdEvent()}"> Tambah Tiket </a> <br>
+                <a href="/showNewTiketForm?idEvent=${idEvent}"> Tambah Tiket </a> <br>
                 <a href="/home"> Home </a> <br>
                 <a href="/showAllEvents"> Back </a> <br> <br>
                 <table border="1">
@@ -25,12 +25,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="t" items="${tiket}">
-                            <tr>
-                                <td> ${t.getIdTiket()} </td>
-                                <td> ${t.getUser().getFirstName()} ${t.getUser().getLastName()} </td>
-                            </tr>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${tiket == null}">
+                                <h4> Kosong </h4>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="t" items="${tiket}">
+                                    <tr>
+                                        <td> ${t.getIdTiket()}</td>
+                                        <td> ${t.getUser().getFirstName()} ${t.getUser().getLastName()} </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </tbody>
                 </table>
             </div>

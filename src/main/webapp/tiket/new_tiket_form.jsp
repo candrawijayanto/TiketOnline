@@ -23,7 +23,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <form method="POST" , action="/addTiket2">
+                        <form method="POST" action="/addTiket2">
+                            <input type="hidden" name="jumlahSaatIni" value=${jumlahSaatIni}>
+                            <input type="hidden" name="idEvent" value=${idEvent}> 
                             <c:forEach var="u" items="${user}">
                                 <tr>
                                     <td> ${u.getIdUser()} </td>

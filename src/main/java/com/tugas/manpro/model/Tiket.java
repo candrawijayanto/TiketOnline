@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tiket")
 public class Tiket {
@@ -18,10 +20,12 @@ public class Tiket {
     @Column(name = "idTiket")
     private int idTiket;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idEvent")
     private Event event;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idUser")
     User user;
@@ -40,6 +44,11 @@ public class Tiket {
     public Tiket(int idTiekt, Event event) {
         this.idTiket = idTiekt;
         this.event = event;
+    }
+
+    public Tiket(Event event, User user) {
+        this.event = event;
+        this.user = user;
     }
 
     public int getIdTiket() {

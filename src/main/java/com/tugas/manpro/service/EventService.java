@@ -25,8 +25,8 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public Event getEventById(int id_event) {
-        return eventRepository.getById(id_event);
+    public Event getEventById(int idEvent) {
+        return eventRepository.getById(idEvent);
     }
 
     public void addEvent(Event event) {

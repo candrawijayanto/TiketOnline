@@ -19,6 +19,8 @@ public interface TiketRepository extends CrudRepository<Tiket, Integer> {
     @Query("FROM Tiket WHERE idEvent=?1")
     List<Tiket> findByIdEvent(int idEvent);
 
+    Tiket findByIdTiket(int idTiket);
+
     List<Tiket> findByUser(User user);
 
     @Query("SELECT COUNT(*) FROM Tiket WHERE idEvent=?1")

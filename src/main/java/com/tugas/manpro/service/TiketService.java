@@ -28,6 +28,10 @@ public class TiketService {
         return tiketRepository.findByIdEvent(idEvent);
     }
 
+    public Tiket getTiketByIdTiket (int idTiket){
+        return tiketRepository.findByIdTiket(idTiket);
+    }
+
     public List<Tiket> getTiketByUser(User user) {
         return tiketRepository.findByUser(user);
     }
@@ -38,6 +42,10 @@ public class TiketService {
 
     public void addTiket(int idEvent) {
         tiketRepository.addTiket(idEvent);
+    }
+
+    public void save(Event event, User user){
+        tiketRepository.save(new Tiket(event, user));        
     }
 
 }

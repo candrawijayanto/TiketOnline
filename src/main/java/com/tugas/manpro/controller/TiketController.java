@@ -96,4 +96,10 @@ public class TiketController {
         }
         return "redirect:/showAllEventTikets?idEvent=" + idEvent;
     }
+
+    @GetMapping("/deleteTiket")
+    public String deleteTiket(int idTiket, int idEvent){
+        tiketService.deleteTiketByIdTiket(idTiket);
+        return "redirect:/showAllEventTikets?idEvent=" + idEvent;
+    }
 }

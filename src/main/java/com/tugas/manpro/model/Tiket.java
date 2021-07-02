@@ -20,7 +20,6 @@ public class Tiket {
     @Column(name = "idTiket")
     private int idTiket;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idEvent")
     private Event event;

@@ -34,7 +34,7 @@
                                 <td> ${e.location} </td>
                                 <td> ${e.jml} </td>
                                 <td>
-                                    <a href="/deleteEvent?id=${e.idEvent}"> hapus | </a>
+                                    <a href="/deleteEvent?id=${e.idEvent}" onclick="return confirm('Are you sure want to Delete?');"> hapus | </a>
                                     <a href="/showUpdateEventForm?id=${e.idEvent}"> edit | </a>
                                     <a href="/showAllEventTikets?idEvent=${e.idEvent}"> tiket </a>
                                 </td>

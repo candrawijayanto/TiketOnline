@@ -22,6 +22,7 @@
                         <tr>
                             <td> ID Tiket </td>
                             <td> Nama User </td>
+                            <td> Operasi </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,6 +35,7 @@
                                     <tr>
                                         <td> ${t.getIdTiket()}</td>
                                         <td> ${t.getUser().getFirstName()} ${t.getUser().getLastName()} </td>
+                                        <td> <a href="/deleteTiket?idTiket=${t.getIdTiket()}&idEvent=${idEvent}" onclick="return confirm('Are you sure want to Delete?');"> hapus </a>
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>

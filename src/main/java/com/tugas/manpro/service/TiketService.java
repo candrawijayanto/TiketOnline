@@ -28,7 +28,7 @@ public class TiketService {
         return tiketRepository.findByIdEvent(idEvent);
     }
 
-    public Tiket getTiketByIdTiket (int idTiket){
+    public Tiket getTiketByIdTiket(int idTiket) {
         return tiketRepository.findByIdTiket(idTiket);
     }
 
@@ -44,8 +44,12 @@ public class TiketService {
         tiketRepository.addTiket(idEvent);
     }
 
-    public void save(Event event, User user){
-        tiketRepository.save(new Tiket(event, user));        
+    public void save(Event event, User user) {
+        tiketRepository.save(new Tiket(event, user));
+    }
+
+    public void deleteTiketByIdTiket(int idTiket) {
+        tiketRepository.deleteById(idTiket);
     }
 
 }

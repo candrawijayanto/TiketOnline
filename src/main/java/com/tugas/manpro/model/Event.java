@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -28,6 +30,7 @@ public class Event {
     private String location;
     private int jml;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "event")
     private List<Tiket> tiket = new ArrayList<>();
 

@@ -52,4 +52,8 @@ public class TiketService {
         tiketRepository.deleteById(idTiket);
     }
 
+    public int cekUser(int idUser, int idEvent){
+        return tiketRepository.cekUser(idUser, idEvent);
+    }
+
 }

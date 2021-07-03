@@ -21,6 +21,7 @@
                             <td> Event Name </td>
                             <td> Event Date </td>
                             <td> Event Location </td>
+                            <td> Operasi </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,6 +31,7 @@
                                 <td> ${u.getEvent().getName()} </td>
                                 <td> ${u.getEvent().getDate()} </td>
                                 <td> ${u.getEvent().getLocation()} </td>
+                                <td> <a href="/deleteUserTiket?idTiket=${u.getIdTiket()}&idUser=${user.getIdUser()}" onclick="return confirm('Yakin Hapus?');"> hapus </a> </td>
                             </tr>
                         </c:forEach>
                     </tbody>

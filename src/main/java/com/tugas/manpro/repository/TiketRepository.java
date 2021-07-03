@@ -23,6 +23,7 @@ public interface TiketRepository extends CrudRepository<Tiket, Integer> {
 
     List<Tiket> findByUser(User user);
 
+    // untuk menhitung jumlah tiket event yang sudah terdaftar/dibuat
     @Query("SELECT COUNT(*) FROM Tiket WHERE idEvent=?1")
     public int currentAmount(int idEvent);
 
@@ -30,5 +31,10 @@ public interface TiketRepository extends CrudRepository<Tiket, Integer> {
     @Modifying
     @Query(value = "insert into tiket(idEvent) select :idEvent", nativeQuery = true)
     public void addTiket(@Param("idEvent") int idEvent);
+
+    //cek untuk cegah 1 event memiliki lebih 1 peserta yg sama
+    @Query(value = "SELECT COUNT(*) FROM Tiket WHERE idUser=?1 AND idEvent=?2")
+    public int cekUser(int idUser, int idEvent);
+
 
 }

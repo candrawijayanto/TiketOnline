@@ -10,6 +10,7 @@ import com.tugas.manpro.service.TiketService;
 import com.tugas.manpro.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,6 +67,7 @@ public class TiketController {
         return mv;
     }
 
+    // udah nggak kepakek keknya, ganti ke addTiket2()
     @PostMapping("/addTiket")
     public String addTiket(int idEvent, int jumlah) {
         int hasil = tiketService.currentAmount(idEvent) + jumlah;
@@ -82,24 +84,54 @@ public class TiketController {
 
     @PostMapping("/addTiket2")
     public String addTiket2(int userSelect[], int jumlahSaatIni, int idEvent) {
-        int hasil = tiketService.currentAmount(idEvent) + jumlahSaatIni;
-
         Event event = eService.getEventById(idEvent);
 
-        if (hasil > eService.getLimitEvent(idEvent)) {
-            System.out.println("Tiket sudah habis");
-        } else {
-            for (int idUser : userSelect) {
-                User user = userService.getUserById(idUser);
-                tiketService.save(event, user);
+        // forEach untuk ekstrak user yang dipilih
+        for (int idUser : userSelect) {
+            jumlahSaatIni += 1;
+            User user = userService.getUserById(idUser);
+
+            // untuk cek apakah tiket masih ada?
+            if (jumlahSaatIni > event.getJml()) {
+                System.err.println("Tiket sudah habis, user " + user + " tidak jadi terdaftar");
+                return "redirect:/showAllEventTikets?idEvent=" + idEvent;
+            } else {
+                // cek apakah user sudah terdaftar sebelumnya?
+                if (tiketService.cekUser(idUser, idEvent) >= 1) {
+                    System.err.println("User: " + user + " sudah terdaftar");
+                    jumlahSaatIni -= 1;
+                } else {
+                    tiketService.save(event, user);
+                    System.out.println("user " + user + " berhasil didaftarkan");
+                }
             }
+        }
+
+        return "redirect:/showAllEventTikets?idEvent=" + idEvent;
+    }
+
+    // untuk hapus tiket dari halaman event_tiket.jsp
+    @GetMapping("/deleteEventTiket")
+    public String deleteEventTiket(int idTiket, int idEvent) {
+        // try catch untuk cek apakah tiket yg diapus itu beneran ada di DB?
+        try {
+            tiketService.deleteTiketByIdTiket(idTiket);
+        } catch (EmptyResultDataAccessException e) {
+            System.err.println("tiket dengan id: " + idTiket + " tidak ada / sudah dihapus bos!");
         }
         return "redirect:/showAllEventTikets?idEvent=" + idEvent;
     }
 
-    @GetMapping("/deleteTiket")
-    public String deleteTiket(int idTiket, int idEvent){
-        tiketService.deleteTiketByIdTiket(idTiket);
-        return "redirect:/showAllEventTikets?idEvent=" + idEvent;
+    // untuk hapus tiket dari halaman user_tiket.jsp
+    @GetMapping("deleteUserTiket")
+    public String deleteUserTiket(int idTiket, int idUser) {
+        // try catch untuk cek apakah tiket yg diapus itu beneran ada di DB?
+        try {
+            tiketService.deleteTiketByIdTiket(idTiket);
+        } catch (EmptyResultDataAccessException e) {
+            System.err.println("tiket dengan id: " + idTiket + " tidak ada / sudah dihapus  bos!");
+        }
+        return "redirect:/showAllUserTiket?idUser=" + idUser;
     }
+
 }

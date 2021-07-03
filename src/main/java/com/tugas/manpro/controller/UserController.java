@@ -43,6 +43,8 @@ public class UserController {
     // method untuk tambah user
     @PostMapping("/addUser")
     public String addUser(User user) {
+        // cek apakai email sudah pernah digunakan?
+        // null berarti belum pernah dipakai, !null berarti sudah pernah dipakai
         if (userService.getUserByEmail(user.getEmail()) != null) {
             System.out.println("Email " + user.getEmail() + " sudah dipakai, silahkan gunakan email yang lain!");
         } else {
@@ -54,7 +56,8 @@ public class UserController {
     // method untuk update/edit user
     @PostMapping("/updateUser")
     public String updateUser(User user) {
-        System.out.println("hasil user dari form: " + user);
+        // cek apakah email sudah pernah digunakan?
+        // true berarti sudah dipakai, false berarti blm pernah dipakai
         if (userService.cekUpdateEmail(user.getEmail(), user.getIdUser())) {
             System.out.println("Email " + user.getEmail() + " sudah dipakai, silahkan gunakan email yang lain!");
         } else {
@@ -66,6 +69,7 @@ public class UserController {
 
     @GetMapping("/deleteUser")
     public String deleteUser(int idUser) {
+        // try catch untuk cek apakah user yg diapus itu beneran ada di DB?
         try {
             userService.deleteUserByIdUser(idUser);
         } catch (EmptyResultDataAccessException e) {

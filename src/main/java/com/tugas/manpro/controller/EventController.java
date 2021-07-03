@@ -53,6 +53,7 @@ public class EventController {
 
     @RequestMapping("/deleteEvent")
     public String deleteEvent(int idEvent) {
+        // try catch untuk cek apakah event yg diapus itu beneran ada di DB?
         try {
             eventService.deleteEvent(idEvent);
         } catch (EmptyResultDataAccessException e) {

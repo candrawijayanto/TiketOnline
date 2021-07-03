@@ -12,31 +12,34 @@
         <body>
             <div align="center">
                 <h1> User List</h1>
-                <a href="/home"> Home </a>
-                    <table border="1">
-                        <thead>
+                <a href="/home"> Home </a> <br>
+                <a href="/showNewUserForm"> Tambah User </a> <br> <br>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <td> ID User </td>
+                            <td> First Name </td>
+                            <td> Last Name </td>
+                            <td> Email </td>
+                            <td> Operasi </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="user" items="${user}">
                             <tr>
-                                <td> ID User </td>
-                                <td> First Name </td>
-                                <td> Last Name </td>
-                                <td> Email </td>
-                                <td> operasi </td>
+                                <td> ${user.getIdUser()} </td>
+                                <td> ${user.getFirstName()} </td>
+                                <td> ${user.getLastName()} </td>
+                                <td> ${user.getEmail()} </td>
+                                <td>
+                                    <a href="/showUpdateUserForm?idUser=${user.getIdUser()}"> edit | </a>
+                                    <a href="/deleteUser?idUser=${user.getIdUser()}" onclick="return confirm('Yakin mau hapus?');"> hapus | </a>
+                                    <a href="/showAllUserTiket?idUser=${user.getIdUser()}"> tiket </a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="user" items="${user}">
-                                <tr>
-                                    <td> ${user.getIdUser()} </td>
-                                    <td> ${user.getFirstName()} </td>
-                                    <td> ${user.getLastName()} </td>
-                                    <td> ${user.getEmail()} </td>
-                                    <td>
-                                        <a href="/showAllUserTiket?idUser=${user.getIdUser()}"> tiket </a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                        </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </body>
 

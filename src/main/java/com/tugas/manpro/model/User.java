@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,8 +25,7 @@ public class User {
     private String lastName;
     private String email;
 
-    @OneToMany
-    @JoinColumn(name = "idUser")
+    @OneToMany(mappedBy = "user")
     private List<Tiket> tiket = new ArrayList<>();
 
     public List<Tiket> getTiket() {
@@ -82,7 +80,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "[ iduser:" + idUser + " nama: " + firstName + " " +  lastName  + " email:" + email + " ]";
+        return "User [email=" + email + ", firstName=" + firstName + ", idUser=" + idUser + ", lastName=" + lastName
+                + "]";
     }
 
 }

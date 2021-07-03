@@ -6,6 +6,7 @@ import com.tugas.manpro.model.Event;
 import com.tugas.manpro.service.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,15 +20,15 @@ public class EventController {
     private EventService eventService;
 
     @GetMapping("/showNewEventForm")
-    public ModelAndView showNewEventForm(){
+    public ModelAndView showNewEventForm() {
         ModelAndView mv = new ModelAndView("/event/new_event_form.jsp");
         return mv;
     }
 
     @GetMapping("/showUpdateEventForm")
-    public ModelAndView showUpdateEventForm(int id){
+    public ModelAndView showUpdateEventForm(int id) {
         ModelAndView mv = new ModelAndView("/event/update_event_form.jsp");
-        Event event = eventService.getEventById(id); 
+        Event event = eventService.getEventById(id);
         mv.addObject("event", event);
         return mv;
     }
@@ -40,17 +41,23 @@ public class EventController {
         return mv;
     }
 
+    // method untuk tambah ATAU edit event
     @PostMapping("/addEvent")
     public String addEvent(Event event) {
         System.out.println("Data yg ditambah: " + event);
+
+        // eventService.addEvent(event); bisa untuk update atau create event
         eventService.addEvent(event);
         return "redirect:/showAllEvents";
     }
 
     @RequestMapping("/deleteEvent")
-    public String deleteEvent(int id) {
-        System.out.println("data yang dihapus: " + id);
-        eventService.deleteEvent(id);
+    public String deleteEvent(int idEvent) {
+        try {
+            eventService.deleteEvent(idEvent);
+        } catch (EmptyResultDataAccessException e) {
+            System.err.println("Event dengan id " + idEvent + " tidak ada/sudah dihapus!");
+        }
         return "redirect:/showAllEvents";
     }
 

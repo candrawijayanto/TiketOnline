@@ -13,15 +13,14 @@
             <h1> Update Event </h1>
             <a href="/showAllEvents"> Back </a> <br> <br>
 
-        
-                    <form action="/addEvent" method="POST">
-                        <input type="hidden" name="idEvent" value=${event.idEvent}>
-                        <input type="text" name="name" placeholder="Nama Event" value=${event.name}>
-                        <input type="date" name="date" placeholder="Date" value=${event.date}>
-                        <input name="location" placeholder="Lokasi" value=${event.location}>
-                        <input type="number" name="jml" placeholder="Limit" value=${event.jml}>
-                        <input type="submit">
-                    </form>
+            <form action="/addEvent" method="POST">
+                <input type="hidden" name="idEvent" value=${event.idEvent}>
+                <input type="text" name="name" placeholder="Nama Event" value=${event.name}>
+                <input type="date" name="date" placeholder="Date" value=${event.date}>
+                <input name="location" placeholder="Lokasi" value=${event.location}>
+                <input type="number" name="jml" placeholder="Limit" value=${event.jml}>
+                <input type="submit">
+            </form>
         </body>
 
     </html>

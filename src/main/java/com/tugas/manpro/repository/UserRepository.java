@@ -14,7 +14,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
    // jika tidak ada maka akan return NULL (if NULL maka email blm dipakai)
    public User findByEmail(String email);
 
-   // method untuk hitung record yg memiliki email dana idUser tertentu
+   // method untuk hitung record yg memiliki email dan idUser tertentu
    // jika 0 (false) maka email blm pernah dipakai
    // jika 1 (true) maka email sudah pernah dipakai, silahkan gunakan email lain
    @Query("SELECT COUNT(*) FROM User WHERE email=?1 AND idUser <> ?2")

@@ -55,6 +55,17 @@ public class TiketController {
         return mv;
     }
 
+    @GetMapping("/showAllTikets")
+    public ModelAndView getAllTikets() {
+        ModelAndView mv = new ModelAndView("/tiket/tiket.jsp");
+        List<Tiket> tiket = tiketService.getAllTikets();
+        mv.addObject("tiket", tiket);
+
+        return mv;
+    }
+
+    // Tambah tiket dari menu manajemen event
+    // dipakai di event_tiket.jsp
     @GetMapping("showNewTiketForm")
     public ModelAndView showNewTiketForm(int idEvent) {
         ModelAndView mv = new ModelAndView("/tiket/new_tiket_form.jsp");
@@ -64,6 +75,13 @@ public class TiketController {
         mv.addObject("jumlahSaatIni", jumlahSaatIni);
         mv.addObject("user", user);
         mv.addObject("idEvent", idEvent);
+        return mv;
+    }
+
+    @GetMapping("showNewTiketMenu")
+    public ModelAndView showNewTiketForm2() {
+        ModelAndView mv = new ModelAndView("/tiket/new_tiket_menu.jsp");
+        mv.addObject("event", eService.getAllEvents());
         return mv;
     }
 
@@ -82,6 +100,7 @@ public class TiketController {
         return "redirect:/showAllTikets?idEvent=" + idEvent;
     }
 
+    // method untuk tambah tiket
     @PostMapping("/addTiket2")
     public String addTiket2(int userSelect[], int jumlahSaatIni, int idEvent) {
         Event event = eService.getEventById(idEvent);
@@ -132,6 +151,18 @@ public class TiketController {
             System.err.println("tiket dengan id: " + idTiket + " tidak ada / sudah dihapus  bos!");
         }
         return "redirect:/showAllUserTiket?idUser=" + idUser;
+    }
+
+    // huntuk hapus tiket dari halaman tiket.jsp
+    @GetMapping("deleteTiket")
+    public String deleteTiket(int idTiket) {
+        // try catch untuk cek apakah tiket yg diapus itu beneran ada di DB?
+        try {
+            tiketService.deleteTiketByIdTiket(idTiket);
+        } catch (EmptyResultDataAccessException e) {
+            System.err.println("tiket dengan id: " + idTiket + " tidak ada / sudah dihapus  bos!");
+        }
+        return "redirect:/showAllTikets";
     }
 
 }

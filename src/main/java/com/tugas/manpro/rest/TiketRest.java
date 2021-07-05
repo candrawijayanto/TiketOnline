@@ -1,5 +1,7 @@
 package com.tugas.manpro.rest;
 
+import java.util.List;
+
 import com.tugas.manpro.model.Tiket;
 import com.tugas.manpro.service.TiketService;
 
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/tiket/")
+@RequestMapping(path = "/api/tiket")
 public class TiketRest {
 
     @Autowired
@@ -21,5 +23,11 @@ public class TiketRest {
         Tiket tiket = tiketService.getTiketByIdTiket(idTiket);
         System.out.println("hasil rest: " + tiket);
         return tiket;
+    }
+
+    @GetMapping("/")
+    public List<Tiket> getAllTiket(){
+        List<Tiket> tikets = tiketService.getAllTikets();
+        return tikets;
     }
 }

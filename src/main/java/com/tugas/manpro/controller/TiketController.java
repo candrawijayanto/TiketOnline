@@ -2,6 +2,8 @@ package com.tugas.manpro.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import com.tugas.manpro.model.Event;
 import com.tugas.manpro.model.Tiket;
 import com.tugas.manpro.model.User;
@@ -153,7 +155,7 @@ public class TiketController {
         return "redirect:/showAllUserTiket?idUser=" + idUser;
     }
 
-    // huntuk hapus tiket dari halaman tiket.jsp
+    // untuk hapus tiket dari halaman tiket.jsp
     @GetMapping("deleteTiket")
     public String deleteTiket(int idTiket) {
         // try catch untuk cek apakah tiket yg diapus itu beneran ada di DB?
@@ -163,6 +165,18 @@ public class TiketController {
             System.err.println("tiket dengan id: " + idTiket + " tidak ada / sudah dihapus  bos!");
         }
         return "redirect:/showAllTikets";
+    }
+
+    // controller untuk memulai automatic process (tugas tambahan)
+    @GetMapping("/automaticEmail")
+    public String automaticEmail() {
+        try {
+            tiketService.job();
+        } catch (InterruptedException | MessagingException e) {
+            e.printStackTrace();
+        }
+
+        return "home.jsp";
     }
 
 }

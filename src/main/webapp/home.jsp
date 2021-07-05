@@ -13,6 +13,7 @@
             <a href="/showAllUsers"> Manajemen User </a> <br> <br>
             <a href="/showAllEvents"> Manajemen Event </a> <br> <br>
             <a href="/showAllTikets"> Manajemen Tiket </a> <br> <br>
+            <a href="/automaticEmail"> Menu Tambahan </a> <br> <br>
         </div>
     </body>
 

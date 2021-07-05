@@ -9,8 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "tiket")
 public class Tiket {
@@ -24,7 +22,6 @@ public class Tiket {
     @JoinColumn(name = "idEvent")
     private Event event;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idUser")
     User user;
@@ -64,6 +61,11 @@ public class Tiket {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    @Override
+    public String toString() {
+        return "Tiket [idTiket=" + idTiket + "]";
     }
 
 }

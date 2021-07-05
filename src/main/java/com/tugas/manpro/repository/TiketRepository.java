@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface TiketRepository extends CrudRepository<Tiket, Integer> {
 
+    List<Tiket> findAll();
+
     List<Tiket> findByEvent(Event event);
 
     @Query("FROM Tiket WHERE idEvent=?1")

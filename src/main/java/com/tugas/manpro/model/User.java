@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -25,6 +27,7 @@ public class User {
     private String lastName;
     private String email;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Tiket> tiket = new ArrayList<>();
 

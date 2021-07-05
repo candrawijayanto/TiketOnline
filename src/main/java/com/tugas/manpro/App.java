@@ -16,6 +16,4 @@ public class App {
 
 // @Configuration
 // @EnableScheduling
-// class Coba {
-
-// }
+// class Coba {}

@@ -7,7 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tiket")
@@ -25,6 +29,22 @@ public class Tiket {
     @ManyToOne
     @JoinColumn(name = "idUser")
     User user;
+
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "tiket")
+    @PrimaryKeyJoinColumn
+    private Absen absen;
+
+    
+
+    public Absen getAbsen() {
+        return absen;
+    }
+
+    public void setAbsen(Absen absen) {
+        this.absen = absen;
+    }
 
     public User getUser() {
         return user;

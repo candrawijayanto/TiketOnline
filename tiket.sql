@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `absen`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `absen` (
   `idTiket` int NOT NULL,
-  `absen` tinyint(1) DEFAULT '0',
+  `absen` datetime NOT NULL,
   PRIMARY KEY (`idTiket`),
   KEY `fk_absen_tiket1_idx` (`idTiket`),
   CONSTRAINT `fk_absen_tiket` FOREIGN KEY (`idTiket`) REFERENCES `tiket` (`idTiket`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -39,6 +39,7 @@ CREATE TABLE `absen` (
 
 LOCK TABLES `absen` WRITE;
 /*!40000 ALTER TABLE `absen` DISABLE KEYS */;
+INSERT INTO `absen` VALUES (21,'2021-07-05 00:00:00'),(22,'2021-10-10 00:00:00');
 /*!40000 ALTER TABLE `absen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +64,6 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admin 1','admin'),(2,'admin 2','admin');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +81,7 @@ CREATE TABLE `event` (
   `location` varchar(45) NOT NULL,
   `jml` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`idEvent`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (1,'event pertama','2021-10-15 00:00:00','Salatiga',100),(2,'event kedua','2021-11-15 00:00:00','Semarang',100);
+INSERT INTO `event` VALUES (4,'event pertama','2021-07-16 00:00:00','Salatiga',5),(5,'event kedua','2021-10-11 00:00:00','Semarang',10);
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +110,7 @@ CREATE TABLE `tiket` (
   KEY `fk_tiket_user1_idx` (`idUser`),
   CONSTRAINT `fk_tiket_event` FOREIGN KEY (`idEvent`) REFERENCES `event` (`idEvent`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_tiket_user1` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +119,7 @@ CREATE TABLE `tiket` (
 
 LOCK TABLES `tiket` WRITE;
 /*!40000 ALTER TABLE `tiket` DISABLE KEYS */;
-INSERT INTO `tiket` VALUES (1,1,3),(2,1,4),(3,2,1),(4,2,2),(14,1,1),(15,1,2),(20,1,1);
+INSERT INTO `tiket` VALUES (21,4,5),(22,4,6),(23,4,7);
 /*!40000 ALTER TABLE `tiket` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +136,7 @@ CREATE TABLE `user` (
   `lastName` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   PRIMARY KEY (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -145,7 +145,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Candra','Wijayanto','candra@email.com'),(2,'Holbed','Joshua','holbed@gmail.com'),(3,'Virginia','Tirza','virgin@gmail.com'),(4,'Muhammad','Aufal','aufal@yahoo.com');
+INSERT INTO `user` VALUES (5,'Candra','Wijayanto','candra@email.com'),(6,'Muhammad','Aufal','aufal@yahoo.com'),(7,'Holbed','Josua','holbed@hotmail.com'),(8,'Virginia','Tirza','virgin@gmail.com');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -158,4 +158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-02 11:23:09
+-- Dump completed on 2021-07-05 21:38:39

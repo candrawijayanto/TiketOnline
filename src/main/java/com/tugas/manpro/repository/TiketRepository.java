@@ -23,6 +23,10 @@ public interface TiketRepository extends CrudRepository<Tiket, Integer> {
 
     Tiket findByIdTiket(int idTiket);
 
+    //untuk buat barcode
+    @Query("FROM Tiket WHERE idEvent=?1 and idUser=?2")
+    Tiket findByIdEventAndIdUser(int idEvent, int idUser);
+
     List<Tiket> findByUser(User user);
 
     // untuk menhitung jumlah tiket event yang sudah terdaftar/dibuat

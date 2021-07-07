@@ -7,6 +7,8 @@ import javax.mail.MessagingException;
 import com.tugas.manpro.model.Event;
 import com.tugas.manpro.model.Tiket;
 import com.tugas.manpro.model.User;
+import com.tugas.manpro.repository.AbsenRepository;
+import com.tugas.manpro.service.BarcodeService;
 import com.tugas.manpro.service.EventService;
 import com.tugas.manpro.service.TiketService;
 import com.tugas.manpro.service.UserService;
@@ -29,6 +31,12 @@ public class TiketController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AbsenRepository absenRepository;
+
+    @Autowired
+    private BarcodeService barcodeService;
 
     @GetMapping("/showAllEventTikets")
     public ModelAndView getAllTikets(int idEvent) {
@@ -123,6 +131,8 @@ public class TiketController {
                     jumlahSaatIni -= 1;
                 } else {
                     tiketService.save(event, user);
+                    Tiket tiket = tiketService.getTiketByIdEventIdUser(idEvent, idUser);
+                    barcodeService.generate(String.valueOf(tiket.getIdTiket()));
                     System.out.println("user " + user + " berhasil didaftarkan");
                 }
             }
@@ -177,6 +187,18 @@ public class TiketController {
         }
 
         return "home.jsp";
+    }
+
+    // untuk hapus absen
+    @GetMapping("/deleteAbsen")
+    public String deleteAbsen(int idAbsen){
+        try{
+            absenRepository.deleteById(idAbsen);
+        } catch (EmptyResultDataAccessException e){
+            System.out.println("data absen untuk id " + idAbsen + " tidak ada / sudah dihapus bos!");
+        }
+
+        return "redirect:/showAllTikets";
     }
 
 }

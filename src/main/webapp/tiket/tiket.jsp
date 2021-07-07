@@ -21,6 +21,7 @@
                             <td> ID Tiket </td>
                             <td> Nama User </td> 
                             <td> Nama Event </td>
+                            <td> Absen </td>
                             <td> Operasi </td>
                         </tr>
                     </thead>
@@ -30,7 +31,11 @@
                                 <td> ${t.getIdTiket()} </td>
                                 <td> ${t.getUser().getFirstName()} ${t.getUser().getLastName()} </td>
                                 <td> ${t.getEvent().getName()} </td>
-                                <td> <a href="/deleteTiket?idTiket=${t.getIdTiket()}" onclick="return confirm('Yakin Hapus?');"> hapus </a> </td>
+                                <td> ${t.getAbsen().getAbsen()} </td>
+                                <td> 
+                                    <a href="/deleteTiket?idTiket=${t.getIdTiket()}" onclick="return confirm('Yakin Hapus?');"> hapus |  </a> 
+                                    <a href="/deleteAbsen?idAbsen=${t.getIdTiket()}" onclick="return confirm('Yahin Hapus?');"> hapus absen </a>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>

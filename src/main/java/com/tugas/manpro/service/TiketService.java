@@ -71,6 +71,11 @@ public class TiketService {
         return tiketRepository.cekUser(idUser, idEvent);
     }
 
+    //cari tiket dari idEvent && idUser
+    public Tiket getTiketByIdEventIdUser(int idEvent, int idUser){
+        return tiketRepository.findByIdEventAndIdUser(idEvent, idUser);
+    }
+
     public void tiketJsonToXml() {
         // buat variabel penampung
         String stringJSON;
@@ -117,8 +122,11 @@ public class TiketService {
         File file = new File("./coba.xml");
 
         // kirim file xml ke email
-        // emailService.sendEmailWithAtt("candrawijayanto56@gmail.com", "ini body atau isi email", "ini subjek",
-                // "./coba.xml");
+        // try{
+        //     emailService.sendEmailWithAtt("candrawijayanto56@gmail.com", "ini body atau isi email", "ini subjek", "./coba.xml");
+        // } catch(MailException e) {
+        //     System.out.println("Email Gagal Dikirim!");
+        // }
 
         // hapus file yg berhasil dikirim
         Thread.sleep(1000L);

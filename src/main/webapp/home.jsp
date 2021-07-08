@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,8 +14,14 @@
             <a href="/showAllUsers"> Manajemen User </a> <br> <br>
             <a href="/showAllEvents"> Manajemen Event </a> <br> <br>
             <a href="/showAllTikets"> Manajemen Tiket </a> <br> <br>
-            <a href="/automaticEmail"> Menu Tambahan </a> <br> <br>
+            <a href="/logout"> Logout </a> <br> <br>
         </div>
+
+        <c:if test='${pesan!=null}'>
+            <script type="text/javascript">
+                alert('pesan: ${pesan}');
+            </script>
+        </c:if>
     </body>
 
 </html>

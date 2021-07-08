@@ -34,10 +34,11 @@ public class EventController {
     }
 
     @GetMapping("/showAllEvents")
-    public ModelAndView showAllEvents() {
+    public ModelAndView showAllEvents(String pesan) {
         ModelAndView mv = new ModelAndView("/event/event.jsp");
         List<Event> events = eventService.getAllEvents();
         mv.addObject("event", events);
+        mv.addObject("pesan", pesan);
         return mv;
     }
 
@@ -52,14 +53,20 @@ public class EventController {
     }
 
     @RequestMapping("/deleteEvent")
-    public String deleteEvent(int idEvent) {
+    public ModelAndView deleteEvent(int idEvent) {
+        ModelAndView mv = new ModelAndView("redirect:/showAllEvents");
+        String pesan = "";
         // try catch untuk cek apakah event yg diapus itu beneran ada di DB?
         try {
             eventService.deleteEvent(idEvent);
+            pesan = "Event dengan id " + idEvent + " berhasil dihapus!"; 
         } catch (EmptyResultDataAccessException e) {
-            System.err.println("Event dengan id " + idEvent + " tidak ada/sudah dihapus!");
+            pesan = "Event dengan id " + idEvent + " tidak ada/sudah dihapus!";
+            mv.addObject("pesan", pesan);
+            System.err.println(pesan);
         }
-        return "redirect:/showAllEvents";
+        mv.addObject("pesan", pesan);
+        return mv;
     }
 
 }

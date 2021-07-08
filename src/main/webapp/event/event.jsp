@@ -34,7 +34,8 @@
                                 <td> ${e.location} </td>
                                 <td> ${e.jml} </td>
                                 <td>
-                                    <a href="/deleteEvent?id=${e.idEvent}" onclick="return confirm('Are you sure want to Delete?');"> hapus | </a>
+                                    <a href="/deleteEvent?idEvent=${e.idEvent}"
+                                        onclick="return confirm('Are you sure want to Delete?');"> hapus | </a>
                                     <a href="/showUpdateEventForm?id=${e.idEvent}"> edit | </a>
                                     <a href="/showAllEventTikets?idEvent=${e.idEvent}"> tiket </a>
                                 </td>
@@ -43,6 +44,13 @@
                     </tbody>
                 </table>
             </div>
+
+            <c:if test='${pesan!=null}'>
+                <script type="text/javascript">
+                    alert('pesan: ${pesan}');
+                </script>
+            </c:if>
+
         </body>
 
     </html>

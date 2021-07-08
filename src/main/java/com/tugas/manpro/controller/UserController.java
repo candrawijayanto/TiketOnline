@@ -22,10 +22,12 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/showAllUsers")
-    public String showAllUsers(HttpSession session) {
+    public ModelAndView showAllUsers(HttpSession session, String pesan) {
+        ModelAndView mv = new ModelAndView("/user/user.jsp");
         List<User> user = userService.getAllUsers();
         session.setAttribute("user", user);
-        return "/user/user.jsp";
+        mv.addObject("pesan", pesan);
+        return mv;
     }
 
     @RequestMapping("/showNewUserForm")
@@ -42,40 +44,49 @@ public class UserController {
 
     // method untuk tambah user
     @PostMapping("/addUser")
-    public String addUser(User user) {
+    public ModelAndView addUser(User user) {
+        ModelAndView mv = new ModelAndView("redirect:/showAllUsers");
         // cek apakai email sudah pernah digunakan?
         // null berarti belum pernah dipakai, !null berarti sudah pernah dipakai
         if (userService.getUserByEmail(user.getEmail()) != null) {
+            String pesan = "Email " + user.getEmail() + " sudah dipakai, silahkan gunakan email yang lain!";
             System.out.println("Email " + user.getEmail() + " sudah dipakai, silahkan gunakan email yang lain!");
+            mv.addObject("pesan", pesan);
         } else {
             userService.addUser(user);
         }
-        return "redirect:/showAllUsers";
+        return mv;
     }
 
     // method untuk update/edit user
     @PostMapping("/updateUser")
-    public String updateUser(User user) {
+    public ModelAndView updateUser(User user) {
+        ModelAndView mv = new ModelAndView("redirect:/showAllUsers");
         // cek apakah email sudah pernah digunakan?
         // true berarti sudah dipakai, false berarti blm pernah dipakai
         if (userService.cekUpdateEmail(user.getEmail(), user.getIdUser())) {
+            String pesan = "Email " + user.getEmail() + " sudah dipakai, silahkan gunakan email yang lain!";
             System.out.println("Email " + user.getEmail() + " sudah dipakai, silahkan gunakan email yang lain!");
+            mv.addObject("pesan", pesan);
         } else {
             // userService.addUser(user) bisa digunakan untuk update atau create user
             userService.addUser(user);
         }
-        return "redirect:/showAllUsers";
+        return mv;
     }
 
     @GetMapping("/deleteUser")
-    public String deleteUser(int idUser) {
+    public ModelAndView deleteUser(int idUser) {
+        ModelAndView mv = new ModelAndView("redirect:/showAllUsers");
         // try catch untuk cek apakah user yg diapus itu beneran ada di DB?
         try {
             userService.deleteUserByIdUser(idUser);
         } catch (EmptyResultDataAccessException e) {
+            String pesan = "user dengan id " + idUser + " sudah tidak ada/sudah dihapus!";
             System.err.println("user dengan id " + idUser + " sudah tidak ada/sudah dihapus!");
+            mv.addObject("pesan", pesan);
         }
-        return "redirect:/showAllUsers";
+        return mv;
     }
 
 }

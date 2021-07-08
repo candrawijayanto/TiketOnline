@@ -33,6 +33,6 @@ public class AdminRest {
 
     @GetMapping
     public List<Admin> getAllAdmins() {
-        return aService.getAdmin();
+        return aService.getAllAdmin();
     }
 }

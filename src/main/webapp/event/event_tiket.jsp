@@ -12,7 +12,7 @@
         <body>
             <div align="center">
                 <h1> List Tiket: <span style="color: yellowgreen;"> ${tiket.get(0).getEvent().getName()} </span></h1>
-                Jumlah Tiket Saat ini: <span style="color: red;"> ${jumlahSaatIni} dari  ${limitTiketEvent} </span>
+                Jumlah Tiket Saat ini: <span style="color: red;"> ${jumlahSaatIni} dari ${limitTiketEvent} </span>
                 <br><br>
                 <a href="/showNewTiketForm?idEvent=${idEvent}"> Tambah Tiket </a> <br>
                 <a href="/home"> Home </a> <br>
@@ -35,7 +35,8 @@
                                     <tr>
                                         <td> ${t.getIdTiket()}</td>
                                         <td> ${t.getUser().getFirstName()} ${t.getUser().getLastName()} </td>
-                                        <td> <a href="/deleteEventTiket?idTiket=${t.getIdTiket()}&idEvent=${idEvent}" onclick="return confirm('Are you sure want to Delete?');"> hapus </a>
+                                        <td> <a href="/deleteEventTiket?idTiket=${t.getIdTiket()}&idEvent=${idEvent}"
+                                                onclick="return confirm('Are you sure want to Delete?');"> hapus </a>
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>
@@ -43,6 +44,11 @@
                     </tbody>
                 </table>
             </div>
+            <c:if test='${pesan!=null}'>
+                <script type="text/javascript">
+                    alert('pesan: ${pesan}');
+                </script>
+            </c:if>
         </body>
 
     </html>

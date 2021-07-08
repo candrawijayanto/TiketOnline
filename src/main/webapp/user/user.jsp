@@ -33,7 +33,8 @@
                                 <td> ${user.getEmail()} </td>
                                 <td>
                                     <a href="/showUpdateUserForm?idUser=${user.getIdUser()}"> edit | </a>
-                                    <a href="/deleteUser?idUser=${user.getIdUser()}" onclick="return confirm('Yakin mau hapus?');"> hapus | </a>
+                                    <a href="/deleteUser?idUser=${user.getIdUser()}"
+                                        onclick="return confirm('Yakin mau hapus?');"> hapus | </a>
                                     <a href="/showAllUserTiket?idUser=${user.getIdUser()}"> tiket </a>
                                 </td>
                             </tr>
@@ -41,6 +42,11 @@
                     </tbody>
                 </table>
             </div>
+            <c:if test='${pesan!=null}'>
+                <script type="text/javascript">
+                    alert('pesan: ${pesan}');
+                </script>
+            </c:if>
         </body>
 
     </html>

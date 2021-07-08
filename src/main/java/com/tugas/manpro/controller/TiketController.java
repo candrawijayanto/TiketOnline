@@ -44,7 +44,7 @@ public class TiketController {
     private EmailService emailService;
 
     @GetMapping("/showAllEventTikets")
-    public ModelAndView getAllTikets(int idEvent) {
+    public ModelAndView getAllTikets(int idEvent, String pesan) {
         ModelAndView mv = new ModelAndView("/event/event_tiket.jsp");
         List<Tiket> tikets = tiketService.getTiketByIdEvent(idEvent);
         int limitTiketEvent = eService.getLimitEvent(idEvent);
@@ -59,6 +59,7 @@ public class TiketController {
         mv.addObject("jumlahSaatIni", jumlahSaatIni);
         mv.addObject("limitTiketEvent", limitTiketEvent);
         mv.addObject("tiket", tikets);
+        mv.addObject("pesan", pesan);
         return mv;
     }
 
@@ -71,11 +72,11 @@ public class TiketController {
     }
 
     @GetMapping("/showAllTikets")
-    public ModelAndView getAllTikets() {
+    public ModelAndView getAllTikets(String pesan) {
         ModelAndView mv = new ModelAndView("/tiket/tiket.jsp");
         List<Tiket> tiket = tiketService.getAllTikets();
         mv.addObject("tiket", tiket);
-
+        mv.addObject("pesan", pesan);
         return mv;
     }
 
@@ -117,7 +118,9 @@ public class TiketController {
 
     // method untuk tambah tiket
     @PostMapping("/addTiket2")
-    public String addTiket2(int userSelect[], int jumlahSaatIni, int idEvent) {
+    public ModelAndView addTiket2(int userSelect[], int jumlahSaatIni, int idEvent, int kirimEmail) {
+        ModelAndView mv = new ModelAndView("redirect:/showAllEventTikets?idEvent=" + idEvent);
+        String pesan = "";
         Event event = eService.getEventById(idEvent);
 
         // forEach untuk ekstrak user yang dipilih
@@ -127,11 +130,14 @@ public class TiketController {
 
             // untuk cek apakah tiket masih ada?
             if (jumlahSaatIni > event.getJml()) {
+                pesan = "Tiket sudah habis, user " + user.getFirstName() + user.getLastName() + " tidak jadi terdaftar";
                 System.err.println("Tiket sudah habis, user " + user + " tidak jadi terdaftar");
-                return "redirect:/showAllEventTikets?idEvent=" + idEvent;
+                mv.addObject("pesan", pesan);
+                return mv;
             } else {
                 // cek apakah user sudah terdaftar sebelumnya?
                 if (tiketService.cekUser(idUser, idEvent) >= 1) {
+                    pesan = "User dengan email" + user.getEmail() + " sudah terdaftar";
                     System.err.println("User: " + user + " sudah terdaftar");
                     jumlahSaatIni -= 1;
                 } else {
@@ -142,51 +148,62 @@ public class TiketController {
                     Tiket tiket = tiketService.getTiketByIdEventIdUser(idEvent, idUser);
                     FileSystemResource barcodeTiket = barcodeService.generate(String.valueOf(tiket.getIdTiket()));
 
-                    // kirim barcode yg berhasil dibuat ke email user
-                    emailService.sendTiketToEmail(user.getEmail(), barcodeTiket, user.getFirstName(), idEvent);
-
+                    if (kirimEmail == 1) {
+                        // kirim barcode yg berhasil dibuat ke email user
+                        emailService.sendTiketToEmail(user.getEmail(), barcodeTiket, user.getFirstName(), idEvent);
+                    }
+                    pesan += "berhasil tambah user: " + user.getEmail();
                     System.out.println("user " + user + " berhasil didaftarkan");
                 }
             }
         }
-
-        return "redirect:/showAllEventTikets?idEvent=" + idEvent;
+        mv.addObject("pesan", pesan);
+        return mv;
     }
 
     // untuk hapus tiket dari halaman event_tiket.jsp
     @GetMapping("/deleteEventTiket")
-    public String deleteEventTiket(int idTiket, int idEvent) {
+    public ModelAndView deleteEventTiket(int idTiket, int idEvent) {
+        ModelAndView mv = new ModelAndView("redirect:/showAllEventTikets?idEvent=" + idEvent);
         // try catch untuk cek apakah tiket yg diapus itu beneran ada di DB?
         try {
             tiketService.deleteTiketByIdTiket(idTiket);
         } catch (EmptyResultDataAccessException e) {
+            String pesan = "tiket dengan id: " + idTiket + " tidak ada / sudah dihapus bos!";
             System.err.println("tiket dengan id: " + idTiket + " tidak ada / sudah dihapus bos!");
+            mv.addObject("pesan", pesan);
         }
-        return "redirect:/showAllEventTikets?idEvent=" + idEvent;
+        return mv;
     }
 
     // untuk hapus tiket dari halaman user_tiket.jsp
     @GetMapping("deleteUserTiket")
-    public String deleteUserTiket(int idTiket, int idUser) {
+    public ModelAndView deleteUserTiket(int idTiket, int idUser) {
+        ModelAndView mv = new ModelAndView("redirect:/showAllUserTiket?idUser=" + idUser);
         // try catch untuk cek apakah tiket yg diapus itu beneran ada di DB?
         try {
             tiketService.deleteTiketByIdTiket(idTiket);
         } catch (EmptyResultDataAccessException e) {
+            String pesan = "tiket dengan id: " + idTiket + " tidak ada / sudah dihapus  bos!";
             System.err.println("tiket dengan id: " + idTiket + " tidak ada / sudah dihapus  bos!");
+            mv.addObject("pesan", pesan);
         }
-        return "redirect:/showAllUserTiket?idUser=" + idUser;
+        return mv;
     }
 
     // untuk hapus tiket dari halaman tiket.jsp
     @GetMapping("deleteTiket")
-    public String deleteTiket(int idTiket) {
+    public ModelAndView deleteTiket(int idTiket) {
+        ModelAndView mv = new ModelAndView("redirect:/showAllTikets");
         // try catch untuk cek apakah tiket yg diapus itu beneran ada di DB?
         try {
             tiketService.deleteTiketByIdTiket(idTiket);
         } catch (EmptyResultDataAccessException e) {
+            String pesan = "tiket dengan id: " + idTiket + " tidak ada / sudah dihapus  bos!";
             System.err.println("tiket dengan id: " + idTiket + " tidak ada / sudah dihapus  bos!");
+            mv.addObject("pesan", pesan);
         }
-        return "redirect:/showAllTikets";
+        return mv;
     }
 
     // controller untuk memulai automatic process (tugas tambahan)
@@ -203,14 +220,17 @@ public class TiketController {
 
     // untuk hapus absen
     @GetMapping("/deleteAbsen")
-    public String deleteAbsen(int idAbsen) {
+    public ModelAndView deleteAbsen(int idAbsen) {
+        ModelAndView mv = new ModelAndView("redirect:/showAllTikets");
         try {
             absenRepository.deleteById(idAbsen);
         } catch (EmptyResultDataAccessException e) {
+            String pesan = "data absen untuk id " + idAbsen + " tidak ada / sudah dihapus bos!";
             System.out.println("data absen untuk id " + idAbsen + " tidak ada / sudah dihapus bos!");
+            mv.addObject("pesan", pesan);
         }
 
-        return "redirect:/showAllTikets";
+        return mv;
     }
 
 }

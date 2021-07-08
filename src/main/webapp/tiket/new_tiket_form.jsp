@@ -26,6 +26,8 @@
                         <form method="POST" action="/addTiket2">
                             <input type="hidden" name="jumlahSaatIni" value=${jumlahSaatIni}>
                             <input type="hidden" name="idEvent" value=${idEvent}> 
+                            <input type="hidden" name="kirimEmail" value="0">
+                            <label for="kirimEmail">Kirim barcode tiket ke-email user?</label> <input type="checkbox" name="kirimEmail" value="1" id="kirimEmail">
                             <c:forEach var="u" items="${user}">
                                 <tr>
                                     <td> ${u.getIdUser()} </td>

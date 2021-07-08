@@ -9,11 +9,13 @@ import com.tugas.manpro.model.Tiket;
 import com.tugas.manpro.model.User;
 import com.tugas.manpro.repository.AbsenRepository;
 import com.tugas.manpro.service.BarcodeService;
+import com.tugas.manpro.service.EmailService;
 import com.tugas.manpro.service.EventService;
 import com.tugas.manpro.service.TiketService;
 import com.tugas.manpro.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +39,9 @@ public class TiketController {
 
     @Autowired
     private BarcodeService barcodeService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/showAllEventTikets")
     public ModelAndView getAllTikets(int idEvent) {
@@ -130,9 +135,16 @@ public class TiketController {
                     System.err.println("User: " + user + " sudah terdaftar");
                     jumlahSaatIni -= 1;
                 } else {
+                    // buat dan simpan tiket ke database
                     tiketService.save(event, user);
+
+                    // buat barcode dari tiket yg disimpan
                     Tiket tiket = tiketService.getTiketByIdEventIdUser(idEvent, idUser);
-                    barcodeService.generate(String.valueOf(tiket.getIdTiket()));
+                    FileSystemResource barcodeTiket = barcodeService.generate(String.valueOf(tiket.getIdTiket()));
+
+                    // kirim barcode yg berhasil dibuat ke email user
+                    emailService.sendTiketToEmail(user.getEmail(), barcodeTiket, user.getFirstName(), idEvent);
+
                     System.out.println("user " + user + " berhasil didaftarkan");
                 }
             }
@@ -191,10 +203,10 @@ public class TiketController {
 
     // untuk hapus absen
     @GetMapping("/deleteAbsen")
-    public String deleteAbsen(int idAbsen){
-        try{
+    public String deleteAbsen(int idAbsen) {
+        try {
             absenRepository.deleteById(idAbsen);
-        } catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             System.out.println("data absen untuk id " + idAbsen + " tidak ada / sudah dihapus bos!");
         }
 

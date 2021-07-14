@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.stereotype.Component;
-
-@Component
+// @Component
 public class LoginFilter implements Filter {
 
     @Override
@@ -28,9 +26,9 @@ public class LoginFilter implements Filter {
         String path = hRequest.getServletPath();
         String userSession = (String) session.getAttribute("userSession");
 
-        if (path.equals("/showLoginForm") || path.equals("/login") || userSession !=null) {
+        if (path.equals("/showLoginForm") || path.equals("/login") || userSession != null) {
             chain.doFilter(request, response);
-        }else{
+        } else {
             hResponse.sendRedirect("/showLoginForm");
         }
 

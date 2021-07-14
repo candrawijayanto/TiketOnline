@@ -49,6 +49,7 @@
                             <li><a href="/showAllUsers"> Manajemen User </a></li>
                             <li><a href="/showAllEvents"> Manajemen Event </a></li>
                             <li><a href="/showAllTikets"> Manajemen Tiket </a></li>
+                            <li><a href="/logout"> Logout </a> </li>
                             </li>
                     </menu>
                 </aside>

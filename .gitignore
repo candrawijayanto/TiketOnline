@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# barcode folder untuk simpan barcode tiket user
+barcode/
+
+# coba.xml file untuk automatic process tarik data kirim ke email user
+coba.xml

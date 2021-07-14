@@ -12,7 +12,10 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class EmailService {
@@ -52,6 +55,8 @@ public class EmailService {
         System.out.println("Email Terkirim...");
     }
 
+    @Async
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void sendTiketToEmail(String toEmail, FileSystemResource barcodeTiket, String userName, int idEvent) {
         //ambil detail event
         Event e = eventService.getEventById(idEvent);
